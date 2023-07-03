@@ -19,5 +19,6 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "linebreak-style": ["error", "windows"]
-  }
+  },
+  "ignorePatterns": ["dist"]
 }

@@ -5,7 +5,6 @@ import os from 'node:os';
 import { Methods, methods } from 'constants/methods';
 import { ContentType, Message, Requests } from 'enums';
 import { setResponse } from 'utils/setResponse';
-import { User, users } from 'constants/users';
 
 const PORT = process.env.PORT || 4000;
 const isMULTI = process.env.MULTI === 'true';
@@ -30,17 +29,17 @@ if (isMULTI) {
     const len = os.cpus().length;
     for (let i = 0; i < len; i += 1) {
       const port = +PORT + i;
-      cluster.fork({ PORT: port });
+      const worker = cluster.fork({ PORT: port });
+      worker.on('message', async (message) => {
+        worker.send(message);
+      });
     }
-    cluster.on('message', async (worker, mess) => {
-      worker.send(mess);
-    });
-  } else {
+  } else if (cluster.isWorker) {
     server.listen(PORT, () => console.log(`Server listening on ${PORT}`));
+    process.on('message', (msg) => {
+      console.log(msg);
+    });
   }
-} else if (cluster.isWorker) {
+} else {
   server.listen(PORT, () => console.log(`Server listening on ${PORT}`));
-  process.on('message', (mess) => {
-    users.setAll(mess as User[]);
-  });
 }

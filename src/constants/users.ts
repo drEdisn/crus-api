@@ -14,6 +14,9 @@ function createUsers(startUsers: User[]) {
     getAll(): User[] {
       return users;
     },
+    setAll(values: User[]): void {
+      users = values;
+    },
     getUser(id: string): User | undefined {
       return users.find((user) => user.id === id);
     },

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+    "start:multi": "nodemon --exec cross-env MULTI=true ts-node -r tsconfig-paths/register src/index.ts",
     "start:prod": "tsc --build && cross-env NODE_PATH=dist/ node ./dist/index.js"
   },
   "engines": {

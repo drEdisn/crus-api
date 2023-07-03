@@ -52,11 +52,6 @@ function createUsers(startUsers: User[]) {
   };
 }
 
-const users = createUsers([{
-  id: 'asdf',
-  username: 'Denis',
-  age: 222,
-  hobbys: ['programming'],
-}]);
+const users = createUsers([]);
 
 export { users };
